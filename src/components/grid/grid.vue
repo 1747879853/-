@@ -116,6 +116,7 @@
       </Row>
       </Col>
     </Row>
+    <canvas id="canvas"></canvas>
   </div>
 </template>
 <script charset="utf-8">
@@ -127,33 +128,46 @@ import cartabled from '@/components/table/tabled'
 // document.getElementById("video").style.visibility = "visible";
 export default {
   methods: {
-  function() {
-        "use strict";
-        var video, $output;
-        var scale = 0.25;
-        var initialize = function() {
-            $output = $("#output");
-            video = $("#video").get(0);
-            $("#capture").click(captureImage);
-        };
-        var captureImage = function() {
-            var canvas = document.createElement("canvas");
-            canvas.width = video.videoWidth * scale;
-            canvas.height = video.videoHeight * scale;
-            canvas.getContext('2d')
-                .drawImage(video, 0, 0, canvas.width, canvas.height);
-            var img = document.createElement("img");
-            img.src = canvas.toDataURL('image/png');
-            $output.prepend(img);
-        };
-        $(initialize);
-    }());
-
+  screen() {
+        var canvas = document.getElementById('canvas');
+       var video = this.$refs['aplayerObj']
+       console.log('视频尺寸：'+video.style.width+'*'+video.style.height);
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+       console.log(canvas.width);
+       console.log(canvas.height);
+       var ctx = canvas.getContext('2d');
+       ctx.drawImage(video, 0, 0,1920,1080);
+       var base64 = canvas.toDataURL('images/png');
+       
+       },
   fun(index) {
+    
+    if(index===0){
+      var file = document.getElementById('file0').files[0]
+      var url = URL.createObjectURL(file)
+      this.$refs['aplayerObj'].playerOptions.sources[0].src = url
+    }
+    if(index===1){
+     var file = document.getElementById('file1').files[0]
+      var url = URL.createObjectURL(file)
+      this.$refs['bplayerObj'].playerOptions.sources[0].src = url
+    }
+    if(index===2){
+      var file = document.getElementById('file2').files[0]
+      var url = URL.createObjectURL(file)
+      this.$refs['cplayerObj'].playerOptions.sources[0].src = url
+    }
+    if(index===3){
+      var file = document.getElementById('file3').files[0]
+      var url = URL.createObjectURL(file)
+      this.$refs['dplayerObj'].playerOptions.sources[0].src = url;
+    }
   },
   distinguish(index) {
     if(index===0){
       this.$refs['aplayerObj'].onPlayerPause()
+      screen()
     }
     if(index===1){
       this.$refs['bplayerObj'].playerOptions.controlBar.playToggle = false
