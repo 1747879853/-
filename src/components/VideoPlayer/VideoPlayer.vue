@@ -12,6 +12,7 @@
       ref="videoPlayer"
       :playsinline="true"
       :options="playerOptions"
+      
     >
     </video-player>
   </div>
@@ -25,8 +26,19 @@ import SWF_URL from 'videojs-swf/dist/video-js.swf'
 videojs.options.flash.swf = SWF_URL // 设置flash路径，Video.js会在不支持html5的浏览中使用flash播放视频文件
 export default {
   name: 'videojs',
+  methods: {
+    onPlayerPlay() {
+        this.$refs.videoPlayer.player.play()
+    },
+    onPlayerPause() {
+        this.$refs.videoPlayer.player.pause()
+    }
+  },
   components: {
-    videoPlayer
+    videoPlayer,
+    player() {
+        return this.$refs.videoPlayer.player
+      }
   },
   data() {
     return {
@@ -59,7 +71,7 @@ export default {
         sources: [
           {
             type: 'video/mp4',
-            src: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' // 视频地址-改变它的值播放的视频会改变
+            src: '' // 视频地址-改变它的值播放的视频会改变
           }
         ],
         notSupportedMessage: '此视频暂无法播放，请稍后再试' // 允许覆盖Video.js无法播放媒体源时显示的默认信息。
