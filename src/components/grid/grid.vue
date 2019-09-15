@@ -1,8 +1,5 @@
 <template>
-  <div
-    class="mytable"
-    id="video"
-  >
+  <div class="mytable">
   <Row>
   <Col span="12">
   <input type="file" id="file0">
@@ -17,7 +14,7 @@
       <Col span="8">
       <Card style="height: 390px">
         <div style="text-align:center">
-          <video-player ref="aplayerObj" id="1"></video-player>
+          <video id="video0" :src="videoSrc0" muted controls width="524px" height="368px">video</video>
         </div>
       </Card>
       </Col>
@@ -39,7 +36,7 @@
       <Col span="8">
       <Card style="height: 390px">
         <div style="text-align:center">
-          <video-player ref="bplayerObj"></video-player>
+           <video id="video1" :src="videoSrc1" muted controls width="524px" height="368px">video</video>
         </div>
       </Card>
       </Col>
@@ -74,7 +71,7 @@
       <Col span="8">
       <Card style="height: 390px">
         <div style="text-align:center">
-          <video-player ref="cplayerObj"></video-player>
+           <video id="video2" :src="videoSrc2" muted controls width="524px" height="368px">video</video>
         </div>
       </Card>
       </Col>
@@ -96,7 +93,7 @@
       <Col span="8">
       <Card style="height: 390px">
         <div style="text-align:center">
-          <video-player ref="dplayerObj"></video-player>
+           <video id="video3" :src="videoSrc3" muted controls width="524px" height="368px">video</video>
         </div>
       </Card>
       </Col>
@@ -116,79 +113,135 @@
       </Row>
       </Col>
     </Row>
-    <canvas id="canvas"></canvas>
+    <div>
+    <canvas id="canvas" width="524" height="368" display="none" style="display:none">
+    </canvas>
+  </div>
   </div>
 </template>
 <script charset="utf-8">
-import VideoPlayer from '@/components/VideoPlayer/VideoPlayer'
 import cartablea from '@/components/table/tablea'
 import cartableb from '@/components/table/tableb'
 import cartablec from '@/components/table/tablec'
 import cartabled from '@/components/table/tabled'
-// document.getElementById("video").style.visibility = "visible";
 export default {
   methods: {
-  screen() {
-        var canvas = document.getElementById('canvas');
-       var video = this.$refs['aplayerObj']
-       console.log('视频尺寸：'+video.style.width+'*'+video.style.height);
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-       console.log(canvas.width);
-       console.log(canvas.height);
-       var ctx = canvas.getContext('2d');
-       ctx.drawImage(video, 0, 0,1920,1080);
-       var base64 = canvas.toDataURL('images/png');
-       
-       },
-  fun(index) {
-    
-    if(index===0){
-      var file = document.getElementById('file0').files[0]
-      var url = URL.createObjectURL(file)
-      this.$refs['aplayerObj'].playerOptions.sources[0].src = url
+    adopt(index) {
+      if(index === 0){
+        var video = document.getElementById('video0');
+      }
+      if(index === 1){
+        var video = document.getElementById('video1');
+      }
+      if(index === 2){
+        var video = document.getElementById('video2');
+      }
+      if(index === 3){
+        var video = document.getElementById('video3');
+      }
+      video.play()
+    },
+
+    toImage(index) {
+      if(index === 0){
+        var video = document.getElementById('video0');
+      }
+      if(index === 1){
+        var video = document.getElementById('video1');
+      }
+      if(index === 2){
+        var video = document.getElementById('video2');
+      }
+      if(index === 3){
+        var video = document.getElementById('video3');
+      }
+      var canvas = document.getElementById('canvas');
+      console.log('视频尺寸：'+video.style.width+'*'+video.style.height);
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      console.log(canvas.width);
+      console.log(canvas.height);
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0,canvas.width,canvas.height);
+      var base64 = canvas.toDataURL('images/png');
+       //upload(base64)
+    },
+    sendUrl () {
+　　　　// 如果图片需要formData格式,就自己组装一下,主要看后台需要什么参数
+　　　   // const formData = new FormData()
+　　　　// formData.append('base64', this.company.fileUrl)
+　　　　// formData.append('userId', 123)
+　　　　// formData.append('pathName', 'pdf')
+　　　　this.$ajax({
+　　　　　　url: apiPath.common.uploadBase,
+　　　　　　method: 'post',
+　　　　　　data: this.htmlUrl
+　　　　}).then(res => {
+　　　　　　if (res.code && res.data) {
+ 
+　　　　　　}
+　　　　})
+　　},
+    fun(index) {
+      if(index===0){
+        var file = document.getElementById('file0').files[0]
+        var url = URL.createObjectURL(file)
+        this.videoSrc0=url
+      }
+      if(index===1){
+       var file = document.getElementById('file1').files[0]
+        var url = URL.createObjectURL(file)
+        this.videoSrc1=url
+      }
+      if(index===2){
+        var file = document.getElementById('file2').files[0]
+        var url = URL.createObjectURL(file)
+        this.videoSrc2=url
+      }
+      if(index===3){
+        var file = document.getElementById('file3').files[0]
+        var url = URL.createObjectURL(file)
+        this.videoSrc3=url
+      }
+    },
+    distinguish(index) {
+      if(index===0){
+        let myVideo = document.getElementById("video0");
+        myVideo.pause()
+        this.$options.methods.toImage(index)
+        
+      }
+      if(index===1){
+        let myVideo = document.getElementById("video1");
+        myVideo.pause()
+        this.$options.methods.toImage(index)
+      }
+      if(index===2){
+        let myVideo = document.getElementById("video2");
+        myVideo.pause()
+        this.$options.methods.toImage(index)
+      }
+      if(index===3){
+        let myVideo = document.getElementById("video3");
+        myVideo.pause()
+        this.$options.methods.toImage(index)
+      }
     }
-    if(index===1){
-     var file = document.getElementById('file1').files[0]
-      var url = URL.createObjectURL(file)
-      this.$refs['bplayerObj'].playerOptions.sources[0].src = url
-    }
-    if(index===2){
-      var file = document.getElementById('file2').files[0]
-      var url = URL.createObjectURL(file)
-      this.$refs['cplayerObj'].playerOptions.sources[0].src = url
-    }
-    if(index===3){
-      var file = document.getElementById('file3').files[0]
-      var url = URL.createObjectURL(file)
-      this.$refs['dplayerObj'].playerOptions.sources[0].src = url;
-    }
-  },
-  distinguish(index) {
-    if(index===0){
-      this.$refs['aplayerObj'].onPlayerPause()
-      screen()
-    }
-    if(index===1){
-      this.$refs['bplayerObj'].playerOptions.controlBar.playToggle = false
-    }
-    if(index===2){
-      this.$refs['cplayerObj'].playerOptions.controlBar.playToggle = false
-    }
-    if(index===3){
-      this.$refs['dplayerObj'].playerOptions.controlBar.playToggle = false
-    }
-  }
-  },
-  components: {
-    VideoPlayer,
-    cartablea,
-    cartableb,
-    cartablec,
-    cartabled
-  },
+    },
+    components: {
+      cartablea,
+      cartableb,
+      cartablec,
+      cartabled
+    },
   data() {
     return {
+    src:'',
+    htmlUrl: '',
+    videoSrc0:'',
+    videoSrc1:'',
+    videoSrc2:'',
+    videoSrc3:'',
     }
   },
   mounted() {
@@ -197,7 +250,7 @@ export default {
   },
   watch: {
     '$route'() {
-      this.$destroy('VideoPlayer')
+      //this.$destroy('VideoPlayer')
     }
   }
 }
