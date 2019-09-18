@@ -1,3 +1,5 @@
+
+
 import axios from 'axios'
 import store from '@/store'
 // import { Spin } from 'iview'
@@ -40,7 +42,8 @@ class HttpRequest {
       // Spin.hide()
     }
   }
-  interceptors(instance, url) {
+
+   interceptors(instance, url) {
     // 请求拦截
     instance.interceptors.request.use(
       config => {
@@ -81,10 +84,11 @@ class HttpRequest {
       }
     )
   }
+
   request(options) {
     const instance = axios.create()
     options = Object.assign(this.getInsideConfig(), options)
-    this.interceptors(instance, options.url)
+    //this.interceptors(instance, options.url)
     return instance(options)
   }
 }

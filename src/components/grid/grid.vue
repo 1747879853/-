@@ -1,5 +1,5 @@
 <template>
-  <div class="mytable">
+  <div class="mytable" id="mytable">
     <button @click="getdata()">axios</button>
   <Row>
   <Col span="12">
@@ -13,9 +13,9 @@
   </Row>
     <Row>
       <Col span="8">
-      <Card style="height: 390px">
+      <Card style="height:390px">
         <div style="text-align:center">
-          <video id="video0" :src="videoSrc0" muted controls width="524px" height="368px">video</video>
+          <video id="video0" :src="videoSrc0" muted controls width="100%" height="360px">video</video>
         </div>
       </Card>
       </Col>
@@ -37,7 +37,7 @@
       <Col span="8">
       <Card style="height: 390px">
         <div style="text-align:center">
-           <video id="video1" :src="videoSrc1" muted controls width="524px" height="368px">video</video>
+           <video id="video1" :src="videoSrc1" muted controls width="100%" height="360px">video</video>
         </div>
       </Card>
       </Col>
@@ -72,7 +72,7 @@
       <Col span="8">
       <Card style="height: 390px">
         <div style="text-align:center">
-           <video id="video2" :src="videoSrc2" muted controls width="524px" height="368px">video</video>
+           <video id="video2" :src="videoSrc2" muted controls width="100%" height="360px">video</video>
         </div>
       </Card>
       </Col>
@@ -94,7 +94,7 @@
       <Col span="8">
       <Card style="height: 390px">
         <div style="text-align:center">
-           <video id="video3" :src="videoSrc3" muted controls width="524px" height="368px">video</video>
+           <video id="video3" :src="videoSrc3" muted controls width="100%" height="360px">video</video>
         </div>
       </Card>
       </Col>
@@ -229,12 +229,15 @@ export default {
       }
     },
     getdata() {
-      this.$axios.get('/test').then(function (response) {
+      var m = document.getElementById("mytable")
+      alert(m)
+
+      /* this.$axios.get('/test').then(function (response) {
         console.log(response)
       })
         .catch(function (error) {
           console.log(error)
-        })
+        })*/
     }
     },
     components: {
