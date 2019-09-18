@@ -1,5 +1,6 @@
 <template>
   <div class="mytable">
+    <button @click="getdata()">axios</button>
   <Row>
   <Col span="12">
   <input type="file" id="file0">
@@ -178,7 +179,7 @@ export default {
 　　　　　　data: this.htmlUrl
 　　　　}).then(res => {
 　　　　　　if (res.code && res.data) {
- 
+
 　　　　　　}
 　　　　})
 　　},
@@ -209,7 +210,7 @@ export default {
         let myVideo = document.getElementById("video0");
         myVideo.pause()
         this.$options.methods.toImage(index)
-        
+
       }
       if(index===1){
         let myVideo = document.getElementById("video1");
@@ -226,6 +227,14 @@ export default {
         myVideo.pause()
         this.$options.methods.toImage(index)
       }
+    },
+    getdata() {
+      this.$axios.get('/test').then(function (response) {
+        console.log(response)
+      })
+        .catch(function (error) {
+          console.log(error)
+        })
     }
     },
     components: {
