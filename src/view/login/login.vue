@@ -3,6 +3,7 @@
 </style>
 <template>
   <div class="login">
+    <button @click="fun()">test</button>
     <div class="login-con">
       <Card
         icon="log-in"
@@ -38,6 +39,14 @@ export default {
           })
         })
       })
+    },
+    fun() {
+      this.$axios.get("/helloworld").then( res =>{
+            alert("success")
+        }).catch(error =>{
+          alert("error")
+            console.log(error);
+        });
     }
   }
 }
