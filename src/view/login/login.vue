@@ -34,14 +34,18 @@ export default {
     handleSubmit({ userName, password }) {
       this.handleLogin({ userName, password }).then(res => {
         this.getUserInfo().then(res => {
+          if(this.$store.state.user.token==''){
+            this.$Message.info('用户或密码不正确！')
+          }else{
           this.$router.push({
             name: '_home'
           })
+        }
         })
       })
     },
     fun() {
-      this.$axios.get("/helloworld").then( res =>{
+      this.$axios.get("/api/helloworld").then( res =>{
             alert("success")
         }).catch(error =>{
           alert("error")

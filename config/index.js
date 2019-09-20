@@ -10,8 +10,16 @@ module.exports = {
     assetsSubDirectory: "static",
     assetsPublicPath: "/",
     proxyTable: {
-      '/api/**': 'http://localhost:8080/springDemo'
+        '/api': {
+            target: 'http://localhost:9090/SpringDemo',//要访问的后端接口
+            changeOrigin: true,
+            pathRewrite: {
+                '^/api': ''
+            }
+        }
+
     },
+
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
