@@ -45,7 +45,7 @@ export default {
       })
     },
     fun() {
-      this.$axios.get("/api/helloworld").then( res =>{
+      this.$axios.get("/api/login").then( res =>{
             alert("success")
         }).catch(error =>{
           alert("error")
