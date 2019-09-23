@@ -9,6 +9,7 @@ module.exports = {
     // Paths
     assetsSubDirectory: "static",
     assetsPublicPath: "/",
+<<<<<<< HEAD
     proxyTable: {
         '/api': {
             target: 'http://localhost:9090/SpringDemo',//要访问的后端接口
@@ -18,12 +19,26 @@ module.exports = {
             }
         }
 
+=======
+    proxy: {
+      '/api': {
+        target: 'http://localhost:8080/SpringDemo',
+        changeOrigin: true,
+        pathRewrite:{
+          '^/api':''
+        }
+      },
+>>>>>>> 修改向后端返回图片过大被拦截
     },
 
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
+<<<<<<< HEAD
     port: 3000, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+=======
+    port: 9099, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+>>>>>>> 修改向后端返回图片过大被拦截
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,

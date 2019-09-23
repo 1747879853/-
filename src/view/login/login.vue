@@ -5,6 +5,7 @@
   <div class="login">
     <button @click="fun()">test</button>
     <div class="login-con">
+      <Button @click="fun()">test</Button>
       <Card
         icon="log-in"
         title="欢迎登录小区车辆管理系统"
@@ -45,12 +46,23 @@ export default {
       })
     },
     fun() {
+<<<<<<< HEAD
       this.$axios.get("/api/login").then( res =>{
             alert("success")
         }).catch(error =>{
           alert("error")
             console.log(error);
         });
+=======
+      this.$axios.get('/api/helloworld').then(function (response) {
+        console.log(response)
+        alert('success')
+      })
+        .catch(function (error) {
+          console.log(error)
+          alert('error')
+        })
+>>>>>>> 修改向后端返回图片过大被拦截
     }
   }
 }

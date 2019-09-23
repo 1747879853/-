@@ -1,6 +1,6 @@
 <template>
   <div class="mytable" id="mytable">
-    <button @click="getdata()">axios</button>
+    <button @click="sendUrl()">axios</button>
   <Row>
   <Col span="12">
   <input type="file" id="file0">
@@ -125,8 +125,13 @@ import cartablea from '@/components/table/tablea'
 import cartableb from '@/components/table/tableb'
 import cartablec from '@/components/table/tablec'
 import cartabled from '@/components/table/tabled'
+import { mapActions } from 'vuex'
 export default {
   methods: {
+    ...mapActions([
+      'imgcv',
+      'getUserInfo'
+    ]),
     adopt(index) {
       if(index === 0){
         var video = document.getElementById('video0');
@@ -168,21 +173,106 @@ export default {
        //upload(base64)
     },
     sendUrl () {
+      var video = document.getElementById('video0');
+      var canvas = document.getElementById('canvas');
+      console.log('视频尺寸：'+video.style.width+'*'+video.style.height);
+      canvas.width = video.videoWidth/2;
+      canvas.height = video.videoHeight/2;
+      console.log("dsssd")
+      console.log(video.videoWidth)
+      console.log(canvas.width);
+      console.log(canvas.height);
+      var ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0,video.videoWidth,video.videoHeight,0,0,video.videoWidth/2,video.videoHeight/2);
+      
+      
+       
+      var base64 = canvas.toDataURL('images/png');
 　　　　// 如果图片需要formData格式,就自己组装一下,主要看后台需要什么参数
-　　　   // const formData = new FormData()
-　　　　// formData.append('base64', this.company.fileUrl)
-　　　　// formData.append('userId', 123)
-　　　　// formData.append('pathName', 'pdf')
-　　　　this.$ajax({
-　　　　　　url: apiPath.common.uploadBase,
+/*
+      var width = video.videoWidth;
+     var height = video.videoHeight;
+      var scale = width / height;
+      var width1 = 720;
+      var height1 = parseInt(width1 / scale);
+      //var canvas = $("#cans");
+      canvas.width = width1;
+      canvas.height = height1;*/
+      //var ctx = canvas.getContext('2d');
+      //ctx.drawImage(video,0,0,width,height,0,0,width1,height1);
+        //var cropStr = canvas.toDataURL("image/jpeg",0.7)
+
+　　　    const formData = new FormData()
+        //console.log(base64.length)
+　　　　 formData.append('base64', base64)
+　　　　 formData.append('userId', 123)
+　　　　 formData.append('pathName', 'pdf')
+       // this.$options.methods.imgCompress(base64,{quality: 0.2})
+　　/*　　this.$axios({
+　　　　　　url: '/api/helloworld',
 　　　　　　method: 'post',
-　　　　　　data: this.htmlUrl
+　　　　　　data: base64
+   
 　　　　}).then(res => {
 　　　　　　if (res.code && res.data) {
 
 　　　　　　}
-　　　　})
+　　　　})*/
+        this.imgcv(base64,'A')
 　　},
+  imgCompress(path,obj){   //path是指上传的图片，obj是压缩的品质，越低越模糊
+            let _this = this  //这里的this 是把vue的实例对象指向改变为_this 
+            var img = new Image();
+            img.src = path.src;
+            img.onload = function(){
+                var that = this;  //这里的this 是把img的对象指向改变为that 
+                // 默认按比例压缩
+                var w = that.width,
+                    h = that.height,
+                    scale = w / h;
+                w = obj.width || w;
+                h = obj.height || (w / scale);
+                var quality = 0.7;  // 默认图片质量为0.7
+                //生成canvas
+                var canvas = document.createElement('canvas');
+                var ctx = canvas.getContext('2d');
+                // 创建属性节点
+                var anw = document.createAttribute("width");
+                anw.nodeValue = w;
+                var anh = document.createAttribute("height");
+                anh.nodeValue = h;
+                canvas.setAttributeNode(anw);
+                canvas.setAttributeNode(anh);
+                ctx.drawImage(that, 0, 0, w, h);
+                // 图像质量
+                if(obj.quality && obj.quality <= 1 && obj.quality > 0){
+                    quality = obj.quality;
+                }
+                // quality值越小，所绘制出的图像越模糊
+                var base64 = canvas.toDataURL('image/jpeg', quality);
+                
+                // 回调函数返回base64的值
+               /* var urlFile = _this.convertBase64UrlToBlob(base64)  //这个地方的处理是为了把压缩的base64转化为对象，获得压缩后图片的大小size，方便对压缩后的图片再次进行判断；
+                console.log(urlFile)
+                if(urlFile.size/1024 > 1025){
+                    _this.$msgbox("图片过大，请重新上传图片")
+                }else{
+                    _this.partitionBase = base64.split(",")[1]
+                    _this.imgType ="."+urlFile.type.split("/")[1]
+                }*/
+            }
+        },
+
+//将base64码转化为file（Blob）
+        //此处函数对压缩后的base64经过处理返回{size: "", type: ""} 
+        convertBase64UrlToBlob(urlData){
+            var arr = urlData.split(','), mime = arr[0].match(/:(.*?);/)[1],
+                bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+            while(n--){
+                u8arr[n] = bstr.charCodeAt(n);
+            }
+            return new Blob([u8arr], {type:mime});
+        },
     fun(index) {
       if(index===0){
         var file = document.getElementById('file0').files[0]

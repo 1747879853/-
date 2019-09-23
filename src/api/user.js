@@ -5,14 +5,14 @@ export const login = ({ userName, password }) => {
     password
   }
   return axios.request({
-    url: 'login',
+    url: '/login',
     data,
     method: 'post'
   })
 }
 export const getUserInfo = token => {
   return axios.request({
-    url: 'get_info',
+    url: '/get_info',
     params: {
       token
     },
@@ -109,6 +109,13 @@ export const gethistory = () => {
 export const getexcel = () => {
   return axios.request({
     url: 'getexcel',
+    method: 'post'
+  })
+}
+export const imgcv = ({data,id}) => {
+  return axios.request({
+    url: '/helloworld',
+    data,
     method: 'post'
   })
 }

@@ -5,7 +5,8 @@ import {
   getOutcartable,
   getuserdata,
   gethistory,
-  getexcel
+  getexcel,
+  imgcv
 } from '@/api/user' // 搭建服务器后导入submitform,cardatadele,fixcardata,checkcardata
 import { setToken, getToken } from '@/libs/util'
 export default {
@@ -28,9 +29,25 @@ export default {
     exceldata: [],
     Outflag: 0,
     getuserflag: 0,
-    getexcelflag: 0
+    getexcelflag: 0,
+    Adata:[],
+    A2data:[],
+    Bdata:[],
+    B2data:[]
   },
   mutations: {
+    setAdata(state,data){
+      state.Adata = data
+    },
+    setA2data(state,data){
+      state.A2data = data
+    },
+    setBdata(state,data){
+      state.Bdata = data
+    },
+    setB2data(state,data){
+      state.B2data = data
+    },
     setAvatar(state, avatarPath) {
       state.avatarImgPath = avatarPath
     },
@@ -341,6 +358,15 @@ export default {
             commit('setexcel', res.data.cartabledata)
           })
         }
+      })
+    },
+    imgcv({ state, commit },data,id) {
+      return new Promise((resolve, reject) => {
+        
+          imgcv(data,id).then(res => {
+            //commit('setexcel', res.data.cartabledata)
+          })
+        
       })
     }
   }

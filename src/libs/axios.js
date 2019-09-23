@@ -22,7 +22,7 @@ const addErrorLog = errorInfo => {
 
 class HttpRequest {
   constructor(
-    baseUrl = 'https://www.easy-mock.com/mock/5add9213ce4d0e69998a6f51/iview-admin/'
+    baseUrl = ''
   ) {
     this.baseUrl = baseUrl
     this.queue = {}
