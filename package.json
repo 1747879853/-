@@ -19,7 +19,7 @@
     "iview": "^3.4.2",
     "jquery": "^3.4.1",
     "js-cookie": "^2.2.0",
-    "jszip": "^3.2.2",
+    "jszip": "^3.7.0",
     "less": "^3.9.0",
     "less-loader": "^5.0.0",
     "node-sass": "^4.12.0",
